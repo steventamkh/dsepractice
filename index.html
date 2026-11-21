@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DSE Physics MC Practice</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f6feb'/%3E%3Ctext x='32' y='43' font-size='30' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3EMC%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2315803d'/%3E%3Ctext x='32' y='43' font-size='30' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3EMC%3C/text%3E%3C/svg%3E">
 <style>
-  :root{--bg:#f5f6f8;--panel:#fff;--ink:#1b2430;--muted:#5d6b7a;--line:#dde2e8;--accent:#1f6feb;--accent-soft:#e8f0fe;
+  :root{--bg:#f5f6f8;--panel:#fff;--ink:#1b2430;--muted:#5d6b7a;--line:#dde2e8;--accent:#15803d;--accent-soft:#dcfce7;
     --good:#1a7f37;--good-soft:#dafbe1;--bad:#cf222e;--bad-soft:#ffebe9;--warn:#9a6700;--chip:#eef1f4;
     --shadow:0 1px 2px rgba(16,24,40,.05),0 6px 18px rgba(16,24,40,.06)}
   *{box-sizing:border-box}
@@ -39,7 +39,7 @@
   .qimg{width:100%;height:auto;display:block;border-radius:8px;margin:14px 0;background:#fff}
   .opts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
   .opt{font:inherit;font-size:1.25rem;font-weight:700;padding:14px 0;border-radius:12px;border:2px solid var(--line);background:var(--panel);cursor:pointer;color:var(--ink)}
-  .opt.sel{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+  .opt.sel{border-color:var(--accent);background:var(--accent);color:#fff}
   .opt.right{border-color:var(--good);background:var(--good-soft);color:var(--good)}
   .opt.wrong{border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
   .feedback{margin-top:12px;padding:10px 14px;border-radius:10px;font-weight:600}
@@ -179,7 +179,7 @@
 
 <script>
 const T = {
-  E:{title:"DSE Physics MC Practice",subtitle:"HKDSE Paper 1A past-paper questions — choose by year or topic",
+  E:{title:"DSE Physics MC Practice",subtitle:"HKDSE Paper 1A past-paper questions (2022–2025) — choose by year or topic",
      years:"Year",topics:"Topic",ext:"Extension questions (*)",extOn:"Include * questions",extHint:"Questions marked * involve the extension component (not for Category A students).",
      howMany:"Number of questions",all:"All",order:"Order",random:"Random",paper:"Paper order",mode:"Mode",
      practice:"Practice",exam:"Exam",practiceHint:"See the answer straight after each question.",examHint:"Timed (1.8 min per question, like the real exam). Answers shown at the end.",
@@ -193,7 +193,7 @@ const T = {
      yours:"Your answer",key:"Answer",none:"—",paperQ:(y,n)=>`${y} DSE Q${n}`,
      footer:"For internal teaching use only. Questions © Hong Kong Examinations and Assessment Authority.",timeUp:"Time is up!",zoom:"Tap the question to enlarge",
      topicsN:{heat:"Heat",mech:"Mechanics",wave:"Waves",em:"Electricity & Magnetism",nuc:"Radioactivity & Nuclear Energy"}},
-  C:{title:"DSE 物理 多項選擇題練習",subtitle:"香港中學文憑試 卷一甲 歷屆試題 — 按年份或課題練習",
+  C:{title:"DSE 物理 多項選擇題練習",subtitle:"香港中學文憑試 卷一甲 歷屆試題（2022–2025）— 按年份或課題練習",
      years:"年份",topics:"課題",ext:"延伸部分題目 (*)",extOn:"包括 * 題目",extHint:"標有 * 的題目涉及延伸部分（甲類學生毋須作答）。",
      howMany:"題目數量",all:"全部",order:"次序",random:"隨機",paper:"按試卷次序",mode:"模式",
      practice:"練習",exam:"考試",practiceHint:"每題作答後即時顯示答案。",examHint:"計時（每題 1.8 分鐘，與正式考試相同），完成後才顯示答案。",
