@@ -1,5 +1,5 @@
 # DSE Physics MC Practice
 
-HKDSE Physics Paper 1A past-paper MC practice (2012–2025). Choose by year or topic; practice or timed exam mode; English / 中文.
+HKDSE Physics past-paper MC practice: Paper 1A (2012–2025) and Paper 2 elective MCs (2025 sample). Choose by paper, year or topic; practice or timed exam mode; English / 中文.
 
 For internal teaching use only. Questions © Hong Kong Examinations and Assessment Authority.

@@ -84,6 +84,10 @@
   <section id="setup">
     <div class="card">
       <div class="row">
+        <h2 data-t="paperH"></h2>
+        <div class="chips" id="paperChips"></div>
+      </div>
+      <div class="row">
         <h2 data-t="years"></h2>
         <div class="chips" id="yearChips"></div>
         <div style="margin-top:8px;display:flex;gap:8px"><button class="btn ghost small" onclick="setAll('yearChips',true)" data-t="selAll"></button><button class="btn ghost small" onclick="setAll('yearChips',false)" data-t="selNone"></button></div>
@@ -92,7 +96,7 @@
         <h2 data-t="topics"></h2>
         <div class="chips" id="topicChips"></div>
       </div>
-      <div class="row">
+      <div class="row" id="extRow">
         <h2 data-t="ext"></h2>
         <div class="chips">
           <button class="chip" id="extChip" aria-pressed="true" onclick="toggle(this);refresh()"></button>
@@ -180,7 +184,7 @@
 
 <script>
 const T = {
-  E:{title:"DSE Physics MC Practice",subtitle:"HKDSE Paper 1A past-paper questions (2012–2025) — choose by year or topic",
+  E:{title:"DSE Physics MC Practice",subtitle:"HKDSE past-paper MC questions — Paper 1A (2012–2025) and Paper 2 electives — choose by year or topic",
      years:"Year",topics:"Topic",ext:"Extension questions (*)",extOn:"Include * questions",extHint:"Questions marked * involve the extension component (not for Category A students).",
      howMany:"Number of questions",all:"All",order:"Order",random:"Random",paper:"Paper order",mode:"Mode",
      practice:"Practice",exam:"Exam",practiceHint:"See the answer straight after each question.",examHint:"Timed (1.8 min per question, like the real exam). Answers shown at the end.",
@@ -191,10 +195,10 @@ const T = {
      confirmFinish:n=>`${n} question(s) not answered. Finish anyway?`,confirmQuit:"Quit this set? Your answers will be lost.",
      result:"Result",scoreSub:(c,n,t)=>`${c} out of ${n} correct${t?` · time used ${t}`:""}`,topic:"Topic",correct:"Correct",
      newSet:"New set",redo:n=>`Redo ${n} wrong`,review:"Review",onlyWrong:"Show wrong / unanswered only",
-     yours:"Your answer",key:"Answer",none:"—",paperQ:(y,n)=>`${y} DSE Q${n}`,
-     footer:"For internal teaching use only. Questions © Hong Kong Examinations and Assessment Authority. 2016 is available in Chinese only. Pre-2016-curriculum and HKEAA-deleted questions are excluded.",timeUp:"Time is up!",selAll:"Select all",selNone:"Clear all",zoom:"Tap the question to enlarge",
-     topicsN:{heat:"Heat",mech:"Mechanics",wave:"Waves",em:"Electricity & Magnetism",nuc:"Radioactivity & Nuclear Energy"}},
-  C:{title:"DSE 物理 多項選擇題練習",subtitle:"香港中學文憑試 卷一甲 歷屆試題（2012–2025）— 按年份或課題練習",
+     yours:"Your answer",key:"Answer",none:"—",paperQ:q=>q.P===2?`${q.y} DSE Paper 2 Q${q.q}`:`${q.y} DSE Q${q.n}`,
+     footer:"For internal teaching use only. Questions © Hong Kong Examinations and Assessment Authority. 2016 is available in Chinese only. Pre-2016-curriculum and HKEAA-deleted questions are excluded.",timeUp:"Time is up!",paperH:"Paper",p1:"Paper 1A (Compulsory)",p2:"Paper 2 (Electives)",selAll:"Select all",selNone:"Clear all",zoom:"Tap the question to enlarge",
+     topicsN:{heat:"Heat",mech:"Mechanics",wave:"Waves",em:"Electricity & Magnetism",nuc:"Radioactivity & Nuclear Energy",astro:"Astronomy & Space Science",atom:"Atomic World",energy:"Energy & Use of Energy",med:"Medical Physics"}},
+  C:{title:"DSE 物理 多項選擇題練習",subtitle:"香港中學文憑試 歷屆多項選擇題 — 卷一甲（2012–2025）及卷二選修部分 — 按年份或課題練習",
      years:"年份",topics:"課題",ext:"延伸部分題目 (*)",extOn:"包括 * 題目",extHint:"標有 * 的題目涉及延伸部分（甲類學生毋須作答）。",
      howMany:"題目數量",all:"全部",order:"次序",random:"隨機",paper:"按試卷次序",mode:"模式",
      practice:"練習",exam:"考試",practiceHint:"每題作答後即時顯示答案。",examHint:"計時（每題 1.8 分鐘，與正式考試相同），完成後才顯示答案。",
@@ -205,16 +209,18 @@ const T = {
      confirmFinish:n=>`尚有 ${n} 題未作答，確定完成？`,confirmQuit:"確定離開？你的答案將不會保留。",
      result:"成績",scoreSub:(c,n,t)=>`${n} 題中答對 ${c} 題${t?` · 用時 ${t}`:""}`,topic:"課題",correct:"答對",
      newSet:"重新選題",redo:n=>`重做 ${n} 道錯題`,review:"題目檢討",onlyWrong:"只顯示答錯／未答",
-     yours:"你的答案",key:"答案",none:"—",paperQ:(y,n)=>`${y} DSE 第 ${n} 題`,
-     footer:"只供校內教學用途。試題版權屬香港考試及評核局所有。已剔除超出現行課程及考評局刪除的題目。",timeUp:"時間到！",selAll:"全選",selNone:"全部取消",zoom:"點擊題目可放大",
-     topicsN:{heat:"熱學",mech:"力學",wave:"波動學",em:"電與磁",nuc:"放射性及核能"}}
+     yours:"你的答案",key:"答案",none:"—",paperQ:q=>q.P===2?`${q.y} DSE 卷二 第 ${q.q} 題`:`${q.y} DSE 第 ${q.n} 題`,
+     footer:"只供校內教學用途。試題版權屬香港考試及評核局所有。已剔除超出現行課程及考評局刪除的題目。",timeUp:"時間到！",paperH:"試卷",p1:"卷一甲（必修部分）",p2:"卷二（選修部分）",selAll:"全選",selNone:"全部取消",zoom:"點擊題目可放大",
+     topicsN:{heat:"熱學",mech:"力學",wave:"波動學",em:"電與磁",nuc:"放射性及核能",astro:"天文學和航天科學",atom:"原子世界",energy:"能量及能源的使用",med:"醫學物理學"}}
 };
-const TOPICS=["heat","mech","wave","em","nuc"];
+const TOPICS1=["heat","mech","wave","em","nuc"], TOPICS2=["astro","atom","energy","med"], TOPICS=[...TOPICS1,...TOPICS2];
+let paper="1";
+const ofPaper=q=>String(q.P||1)===paper;
 let Q=[], lang="E", S=null, timerId=null;
 const $=id=>document.getElementById(id);
 const store={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const qid=q=>`${q.y}-${String(q.n).padStart(2,"0")}`;
-const img=q=>`img/${q.y}-${q.l||lang}-${String(q.n).padStart(2,"0")}.png`;
+const qid=q=>q.P===2?`${q.y}-P2-${q.q}`:`${q.y}-${String(q.n).padStart(2,"0")}`;
+const img=q=>q.P===2?`img/${q.y}-P2${"ABCD"[+q.q[0]-1]}-${q.l||lang}-${q.q[2]}.png`:`img/${q.y}-${q.l||lang}-${String(q.n).padStart(2,"0")}.png`;
 const cOnly=q=>q.l==="C"&&lang==="E"?`<span class="tag ext">中文 only</span>`:"";
 
 function chip(label,val,pressed,onclick){const b=document.createElement("button");b.className="chip";b.textContent=label;b.dataset.v=val;b.setAttribute("aria-pressed",pressed);b.onclick=onclick||(()=>{toggle(b);refresh()});return b}
@@ -224,19 +230,22 @@ function radio(container,b){[...container.children].forEach(c=>c.setAttribute("a
 const on=id=>[...$(id).children].filter(c=>c.getAttribute("aria-pressed")==="true").map(c=>c.dataset.v);
 
 function buildSetup(){
-  const t=T[lang], years=[...new Set(Q.map(q=>q.y))].sort((a,b)=>b-a);
+  const t=T[lang];
+  const pc=$("paperChips"); pc.replaceChildren(...[["1",t.p1],["2",t.p2]].map(([v,l])=>{const b=chip(l,v,v===paper);b.onclick=()=>{if(paper!==v){paper=v;$("yearChips").replaceChildren();$("topicChips").replaceChildren();$("numChips").replaceChildren();buildSetup()}};return b}));
+  const years=[...new Set(Q.filter(ofPaper).map(q=>q.y))].sort((a,b)=>b-a);
+  $("extRow").classList.toggle("hidden",paper==="2");
   const keep=(id,def)=>{const prev=$(id).children.length?on(id):null;return v=>prev?prev.includes(String(v)):def(v)};
-  const ky=keep("yearChips",()=>true), kt=keep("topicChips",()=>true), kn=keep("numChips",v=>v==="10"), ko=keep("orderChips",v=>v==="random"), km=keep("modeChips",v=>v==="practice");
+  const ky=keep("yearChips",()=>true), kt=keep("topicChips",()=>true), kn=keep("numChips",v=>v===(paper==="2"?"8":"10")), ko=keep("orderChips",v=>v==="random"), km=keep("modeChips",v=>v==="practice");
   $("yearChips").replaceChildren(...years.map(y=>chip(y,y,ky(y))));
-  $("topicChips").replaceChildren(...TOPICS.map(k=>chip(t.topicsN[k],k,kt(k))));
-  const nc=$("numChips"); nc.replaceChildren(...["10","20","33","all"].map(v=>{const b=chip(v==="all"?t.all:v,v,kn(v));b.onclick=()=>radio(nc,b);return b}));
+  $("topicChips").replaceChildren(...(paper==="2"?TOPICS2:TOPICS1).map(k=>chip(t.topicsN[k],k,kt(k))));
+  const nc=$("numChips"); nc.replaceChildren(...(paper==="2"?["8","16","all"]:["10","20","33","all"]).map(v=>{const b=chip(v==="all"?t.all:v,v,kn(v));b.onclick=()=>radio(nc,b);return b}));
   const oc=$("orderChips"); oc.replaceChildren(...[["random",t.random],["paper",t.paper]].map(([v,l])=>{const b=chip(l,v,ko(v));b.onclick=()=>radio(oc,b);return b}));
   const mc=$("modeChips"); mc.replaceChildren(...[["practice",t.practice],["exam",t.exam]].map(([v,l])=>{const b=chip(l,v,km(v));b.onclick=()=>radio(mc,b);return b}));
   refresh();
 }
 function pool(){
   const ys=on("yearChips").map(Number), ts=on("topicChips"), ext=$("extChip").getAttribute("aria-pressed")==="true";
-  return Q.filter(q=>ys.includes(q.y)&&ts.includes(q.t)&&(ext||!q.x));
+  return Q.filter(q=>ofPaper(q)&&ys.includes(q.y)&&ts.includes(q.t)&&(paper==="2"||ext||!q.x));
 }
 function refresh(){
   const t=T[lang], n=pool().length;
@@ -257,7 +266,7 @@ function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random
 function start(list){
   let qs=list||pool();
   const order=list?"random":on("orderChips")[0], num=list?"all":on("numChips")[0];
-  if(order==="random")shuffle(qs=[...qs]); else qs=[...qs].sort((a,b)=>a.y-b.y||a.n-b.n);
+  if(order==="random")shuffle(qs=[...qs]); else qs=[...qs].sort((a,b)=>a.y-b.y||(a.P||1)-(b.P||1)||(a.q||"").localeCompare(b.q||"")||a.n-b.n);
   if(num!=="all")qs=qs.slice(0,+num);
   const mode=list?"practice":on("modeChips")[0];
   S={qs,ans:Array(qs.length).fill(null),flag:Array(qs.length).fill(false),i:0,mode,t0:Date.now(),limit:mode==="exam"?Math.round(qs.length*1.8*60):0};
@@ -274,9 +283,9 @@ function tick(){const left=S.limit-Math.floor((Date.now()-S.t0)/1000);$("timer")
 function renderQ(){
   const t=T[lang], q=S.qs[S.i], a=S.ans[S.i], n=S.qs.length, reveal=S.mode==="practice"&&a;
   $("qPos").textContent=t.q(S.i+1,n);
-  $("qTags").innerHTML=`<span class="tag">${t.topicsN[q.t]}</span>`+(q.x?`<span class="tag ext">*</span>`:"")+cOnly(q)+`<span style="font-size:.85rem">${t.paperQ(q.y,q.n)}</span>`;
+  $("qTags").innerHTML=`<span class="tag">${t.topicsN[q.t]}</span>`+(q.x?`<span class="tag ext">*</span>`:"")+cOnly(q)+`<span style="font-size:.85rem">${t.paperQ(q)}</span>`;
   $("progBar").style.width=`${100*S.ans.filter(Boolean).length/n}%`;
-  $("qImg").src=img(q); $("qLink").href=img(q); $("qImg").alt=t.paperQ(q.y,q.n);
+  $("qImg").src=img(q); $("qLink").href=img(q); $("qImg").alt=t.paperQ(q);
   $("opts").replaceChildren(...["A","B","C","D"].map(L=>{const b=document.createElement("button");b.className="opt";b.textContent=L;
     if(reveal){if(L===q.a)b.classList.add("right");else if(L===a)b.classList.add("wrong")}else if(L===a)b.classList.add("sel");
     b.onclick=()=>choose(L);return b}));
@@ -315,7 +324,7 @@ function renderResults(){
 function renderReview(){
   const t=T[lang], only=$("onlyWrongChip").getAttribute("aria-pressed")==="true";
   $("reviewList").innerHTML=S.qs.map((q,k)=>{const a=S.ans[k],ok=a===q.a;if(only&&ok)return"";
-    return `<div class="rev"><div><span class="tag">${t.topicsN[q.t]}</span>${q.x?'<span class="tag ext">*</span>':""}${cOnly(q)}<b>${t.paperQ(q.y,q.n)}</b></div>
+    return `<div class="rev"><div><span class="tag">${t.topicsN[q.t]}</span>${q.x?'<span class="tag ext">*</span>':""}${cOnly(q)}<b>${t.paperQ(q)}</b></div>
       <img class="qimg" src="${img(q)}" alt="" loading="lazy">
       <div>${t.yours}: <span class="${ok?"ok":"no"}">${a||t.none}</span> &nbsp; ${t.key}: <span class="ok">${q.a}</span>${q.p?`<span class="hint">${t.pct(q.p)}</span>`:""}</div></div>`}).join("");
 }
