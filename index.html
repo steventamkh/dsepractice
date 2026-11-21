@@ -86,6 +86,7 @@
       <div class="row">
         <h2 data-t="years"></h2>
         <div class="chips" id="yearChips"></div>
+        <div style="margin-top:8px;display:flex;gap:8px"><button class="btn ghost small" onclick="setAll('yearChips',true)" data-t="selAll"></button><button class="btn ghost small" onclick="setAll('yearChips',false)" data-t="selNone"></button></div>
       </div>
       <div class="row">
         <h2 data-t="topics"></h2>
@@ -179,7 +180,7 @@
 
 <script>
 const T = {
-  E:{title:"DSE Physics MC Practice",subtitle:"HKDSE Paper 1A past-paper questions (2015–2025) — choose by year or topic",
+  E:{title:"DSE Physics MC Practice",subtitle:"HKDSE Paper 1A past-paper questions (2012–2025) — choose by year or topic",
      years:"Year",topics:"Topic",ext:"Extension questions (*)",extOn:"Include * questions",extHint:"Questions marked * involve the extension component (not for Category A students).",
      howMany:"Number of questions",all:"All",order:"Order",random:"Random",paper:"Paper order",mode:"Mode",
      practice:"Practice",exam:"Exam",practiceHint:"See the answer straight after each question.",examHint:"Timed (1.8 min per question, like the real exam). Answers shown at the end.",
@@ -191,9 +192,9 @@ const T = {
      result:"Result",scoreSub:(c,n,t)=>`${c} out of ${n} correct${t?` · time used ${t}`:""}`,topic:"Topic",correct:"Correct",
      newSet:"New set",redo:n=>`Redo ${n} wrong`,review:"Review",onlyWrong:"Show wrong / unanswered only",
      yours:"Your answer",key:"Answer",none:"—",paperQ:(y,n)=>`${y} DSE Q${n}`,
-     footer:"For internal teaching use only. Questions © Hong Kong Examinations and Assessment Authority. 2016 is available in Chinese only. Pre-2016-curriculum and HKEAA-deleted questions are excluded.",timeUp:"Time is up!",zoom:"Tap the question to enlarge",
+     footer:"For internal teaching use only. Questions © Hong Kong Examinations and Assessment Authority. 2016 is available in Chinese only. Pre-2016-curriculum and HKEAA-deleted questions are excluded.",timeUp:"Time is up!",selAll:"Select all",selNone:"Clear all",zoom:"Tap the question to enlarge",
      topicsN:{heat:"Heat",mech:"Mechanics",wave:"Waves",em:"Electricity & Magnetism",nuc:"Radioactivity & Nuclear Energy"}},
-  C:{title:"DSE 物理 多項選擇題練習",subtitle:"香港中學文憑試 卷一甲 歷屆試題（2015–2025）— 按年份或課題練習",
+  C:{title:"DSE 物理 多項選擇題練習",subtitle:"香港中學文憑試 卷一甲 歷屆試題（2012–2025）— 按年份或課題練習",
      years:"年份",topics:"課題",ext:"延伸部分題目 (*)",extOn:"包括 * 題目",extHint:"標有 * 的題目涉及延伸部分（甲類學生毋須作答）。",
      howMany:"題目數量",all:"全部",order:"次序",random:"隨機",paper:"按試卷次序",mode:"模式",
      practice:"練習",exam:"考試",practiceHint:"每題作答後即時顯示答案。",examHint:"計時（每題 1.8 分鐘，與正式考試相同），完成後才顯示答案。",
@@ -205,7 +206,7 @@ const T = {
      result:"成績",scoreSub:(c,n,t)=>`${n} 題中答對 ${c} 題${t?` · 用時 ${t}`:""}`,topic:"課題",correct:"答對",
      newSet:"重新選題",redo:n=>`重做 ${n} 道錯題`,review:"題目檢討",onlyWrong:"只顯示答錯／未答",
      yours:"你的答案",key:"答案",none:"—",paperQ:(y,n)=>`${y} DSE 第 ${n} 題`,
-     footer:"只供校內教學用途。試題版權屬香港考試及評核局所有。已剔除超出現行課程及考評局刪除的題目。",timeUp:"時間到！",zoom:"點擊題目可放大",
+     footer:"只供校內教學用途。試題版權屬香港考試及評核局所有。已剔除超出現行課程及考評局刪除的題目。",timeUp:"時間到！",selAll:"全選",selNone:"全部取消",zoom:"點擊題目可放大",
      topicsN:{heat:"熱學",mech:"力學",wave:"波動學",em:"電與磁",nuc:"放射性及核能"}}
 };
 const TOPICS=["heat","mech","wave","em","nuc"];
@@ -217,6 +218,7 @@ const img=q=>`img/${q.y}-${q.l||lang}-${String(q.n).padStart(2,"0")}.png`;
 const cOnly=q=>q.l==="C"&&lang==="E"?`<span class="tag ext">中文 only</span>`:"";
 
 function chip(label,val,pressed,onclick){const b=document.createElement("button");b.className="chip";b.textContent=label;b.dataset.v=val;b.setAttribute("aria-pressed",pressed);b.onclick=onclick||(()=>{toggle(b);refresh()});return b}
+function setAll(id,v){[...$(id).children].forEach(c=>c.setAttribute("aria-pressed",v));refresh()}
 function toggle(b){b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")!=="true")}
 function radio(container,b){[...container.children].forEach(c=>c.setAttribute("aria-pressed",c===b));refresh()}
 const on=id=>[...$(id).children].filter(c=>c.getAttribute("aria-pressed")==="true").map(c=>c.dataset.v);
