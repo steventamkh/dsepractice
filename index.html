@@ -84,6 +84,7 @@
     </div>
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
     <div class="acct" id="acct"></div>
+    <button class="btn ghost small hidden" id="homeBtn" onclick="goHome()" style="background:var(--panel)"></button>
     <div class="langsw" role="group" aria-label="Language">
       <button id="lgE" onclick="setLang('E')">English</button>
       <button id="lgC" onclick="setLang('C')">中文</button>
@@ -218,7 +219,7 @@ const T = {
      result:"Result",scoreSub:(c,n,t)=>`${c} out of ${n} correct${t?` · time used ${t}`:""}`,topic:"Topic",correct:"Correct",
      newSet:"New set",redo:n=>`Redo ${n} wrong`,review:"Review",onlyWrong:"Show wrong / unanswered only",
      yours:"Your answer",key:"Answer",none:"—",paperQ:q=>q.P===2?`${q.y} DSE Paper 2 Q${q.q}`:`${q.y} DSE Q${q.n}`,
-     footer:"For internal teaching use only. Questions © Hong Kong Examinations and Assessment Authority. 2016 is available in Chinese only. Pre-2016-curriculum and HKEAA-deleted questions are excluded.",timeUp:"Time is up!",gateH:"Sign in to start practising",gateP:"Use your school Google account (@fss.edu.hk). Your results and wrong questions are saved to your account, so you can continue on any device.",signOut:"Sign out",saving:"Saving…",saved:"✓ Saved",needSign:"Sign in again to save",badDom:"Please sign in with your school account (@fss.edu.hk).",saveIn:"Your result is saved to your school account.",saveWait:"Saving your result…",saveFail:"Your result could not be saved yet. It is kept on this device and will be sent next time you sign in.",paperH:"Paper",p1:"Paper 1A (Compulsory)",p2:"Paper 2 (Electives)",selAll:"Select all",selNone:"Clear all",zoom:"Tap the question to enlarge",
+     footer:"For internal teaching use only. Questions © Hong Kong Examinations and Assessment Authority. 2016 is available in Chinese only. Pre-2016-curriculum and HKEAA-deleted questions are excluded.",timeUp:"Time is up!",home:"🏠 Home",gateH:"Sign in to start practising",gateP:"Use your school Google account (@fss.edu.hk). Your results and wrong questions are saved to your account, so you can continue on any device.",signOut:"Sign out",saving:"Saving…",saved:"✓ Saved",needSign:"Sign in again to save",badDom:"Please sign in with your school account (@fss.edu.hk).",saveIn:"Your result is saved to your school account.",saveWait:"Saving your result…",saveFail:"Your result could not be saved yet. It is kept on this device and will be sent next time you sign in.",paperH:"Paper",p1:"Paper 1A (Compulsory)",p2:"Paper 2 (Electives)",selAll:"Select all",selNone:"Clear all",zoom:"Tap the question to enlarge",
      topicsN:{heat:"Heat",mech:"Mechanics",wave:"Waves",em:"Electricity & Magnetism",nuc:"Radioactivity & Nuclear Energy",astro:"Astronomy & Space Science",atom:"Atomic World",energy:"Energy & Use of Energy",med:"Medical Physics"}},
   C:{title:"DSE 物理 多項選擇題練習",subtitle:"香港中學文憑試 歷屆多項選擇題 — 卷一甲（2012–2025）及卷二選修部分 — 按年份或課題練習",
      years:"年份",topics:"課題",ext:"延伸部分題目 (*)",extOn:"包括 * 題目",extHint:"標有 * 的題目涉及延伸部分（甲類學生毋須作答）。",
@@ -232,7 +233,7 @@ const T = {
      result:"成績",scoreSub:(c,n,t)=>`${n} 題中答對 ${c} 題${t?` · 用時 ${t}`:""}`,topic:"課題",correct:"答對",
      newSet:"重新選題",redo:n=>`重做 ${n} 道錯題`,review:"題目檢討",onlyWrong:"只顯示答錯／未答",
      yours:"你的答案",key:"答案",none:"—",paperQ:q=>q.P===2?`${q.y} DSE 卷二 第 ${q.q} 題`:`${q.y} DSE 第 ${q.n} 題`,
-     footer:"只供校內教學用途。試題版權屬香港考試及評核局所有。已剔除超出現行課程及考評局刪除的題目。",timeUp:"時間到！",gateH:"請先登入再開始練習",gateP:"請使用學校 Google 帳戶（@fss.edu.hk）登入。你的成績和錯題會儲存在帳戶中，可在任何裝置繼續練習。",signOut:"登出",saving:"儲存中…",saved:"✓ 已儲存",needSign:"請重新登入以儲存",badDom:"請使用學校帳戶（@fss.edu.hk）登入。",saveIn:"你的成績已儲存到學校帳戶。",saveWait:"正在儲存你的成績…",saveFail:"成績暫時未能儲存，已保留在此裝置，下次登入時會自動上傳。",paperH:"試卷",p1:"卷一甲（必修部分）",p2:"卷二（選修部分）",selAll:"全選",selNone:"全部取消",zoom:"點擊題目可放大",
+     footer:"只供校內教學用途。試題版權屬香港考試及評核局所有。已剔除超出現行課程及考評局刪除的題目。",timeUp:"時間到！",home:"🏠 主頁",gateH:"請先登入再開始練習",gateP:"請使用學校 Google 帳戶（@fss.edu.hk）登入。你的成績和錯題會儲存在帳戶中，可在任何裝置繼續練習。",signOut:"登出",saving:"儲存中…",saved:"✓ 已儲存",needSign:"請重新登入以儲存",badDom:"請使用學校帳戶（@fss.edu.hk）登入。",saveIn:"你的成績已儲存到學校帳戶。",saveWait:"正在儲存你的成績…",saveFail:"成績暫時未能儲存，已保留在此裝置，下次登入時會自動上傳。",paperH:"試卷",p1:"卷一甲（必修部分）",p2:"卷二（選修部分）",selAll:"全選",selNone:"全部取消",zoom:"點擊題目可放大",
      topicsN:{heat:"熱學",mech:"力學",wave:"波動學",em:"電與磁",nuc:"放射性及核能",astro:"天文學和航天科學",atom:"原子世界",energy:"能量及能源的使用",med:"醫學物理學"}}
 };
 const TOPICS1=["heat","mech","wave","em","nuc"], TOPICS2=["astro","atom","energy","med"], TOPICS=[...TOPICS1,...TOPICS2];
@@ -274,7 +275,7 @@ function jwt(t){try{const b=t.split(".")[1].replace(/-/g,"+").replace(/_/g,"/");
 const esc=x=>String(x).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[c]);
 function gsiReady(){return window.google&&google.accounts&&google.accounts.id}
 function showGate(){
-  ["setup","quiz","results"].forEach(id=>$(id).classList.add("hidden"));$("gate").classList.remove("hidden");
+  ["setup","quiz","results"].forEach(id=>$(id).classList.add("hidden"));$("gate").classList.remove("hidden");syncHome();
   const e=$("gateErr");e.textContent=accSt==="bad"?T[lang].badDom:"";e.classList.toggle("hidden",accSt!=="bad");
   if(gsiReady())google.accounts.id.renderButton($("gsiBtn"),{type:"standard",size:"large",shape:"pill",text:"signin_with",locale:lang==="C"?"zh-HK":"en"});
 }
@@ -328,7 +329,7 @@ function applyLang(){
   document.querySelectorAll("[data-t]").forEach(e=>e.textContent=t[e.dataset.t]);
   $("lgE").className=lang==="E"?"on":""; $("lgC").className=lang==="C"?"on":"";
   $("extChip").textContent=t.extOn; $("startBtn").textContent=t.start; $("wrongBtn").textContent=t.redoSaved;
-  $("prevBtn").textContent=t.prev; $("onlyWrongChip").textContent=t.onlyWrong;
+  $("prevBtn").textContent=t.prev; $("homeBtn").textContent=t.home; $("onlyWrongChip").textContent=t.onlyWrong;
 }
 function setLang(l){lang=l;store.set("dsemc_lang",l);applyLang();setAcc(accSt,accMsg);if(!user)return;buildSetup();if(S){if(!$("quiz").classList.contains("hidden"))renderQ();if(!$("results").classList.contains("hidden"))renderResults()}}
 
@@ -340,7 +341,7 @@ function start(list,redo){
   if(num!=="all")qs=qs.slice(0,+num);
   const mode=list?"practice":on("modeChips")[0];
   S={qs,src:redo||list?"redo":"setup",ans:Array(qs.length).fill(null),flag:Array(qs.length).fill(false),i:0,mode,t0:Date.now(),limit:mode==="exam"?Math.round(qs.length*1.8*60):0};
-  $("setup").classList.add("hidden");$("results").classList.add("hidden");$("quiz").classList.remove("hidden");
+  $("setup").classList.add("hidden");$("results").classList.add("hidden");$("quiz").classList.remove("hidden");syncHome();
   clearInterval(timerId);
   if(S.limit){$("timerBox").classList.remove("hidden");tick();timerId=setInterval(tick,1000)}else $("timerBox").classList.add("hidden");
   renderQ(); scrollTo(0,0);
@@ -382,7 +383,7 @@ function finish(){
   sync({part:(S.src==="redo"?"Wrong-question redo – ":"")+(S.qs[0]&&S.qs[0].P===2?"Paper 2":"Paper 1A")+` (${yrs.length>3?yrs[0]+"–"+yrs[yrs.length-1]:yrs.join(", ")})`,
     topics:TOPICS.filter(k=>S.qs.some(q=>q.t===k)).map(k=>T.E.topicsN[k]),mode:S.mode,total:S.qs.length,
     correct:S.qs.filter((q,k)=>S.ans[k]===q.a).length,seconds:S.used,wrongIds:S.qs.filter((q,k)=>S.ans[k]!==q.a).map(qid)});
-  $("quiz").classList.add("hidden");$("results").classList.remove("hidden");renderResults();scrollTo(0,0);
+  $("quiz").classList.add("hidden");$("results").classList.remove("hidden");syncHome();renderResults();scrollTo(0,0);
 }
 function renderResults(){
   const t=T[lang], n=S.qs.length, c=S.qs.filter((q,k)=>S.ans[k]===q.a).length;
@@ -403,7 +404,9 @@ function renderReview(){
       <div>${t.yours}: <span class="${ok?"ok":"no"}">${a||t.none}</span> &nbsp; ${t.key}: <span class="ok">${q.a}</span>${q.p?`<span class="hint">${t.pct(q.p)}</span>`:""}</div></div>`}).join("");
 }
 function redoWrong(){start(S.qs.filter((q,k)=>S.ans[k]!==q.a))}
-function showSetup(){if(!user){showGate();return}$("quiz").classList.add("hidden");$("results").classList.add("hidden");$("setup").classList.remove("hidden");refresh();scrollTo(0,0)}
+function goHome(){if(!$("quiz").classList.contains("hidden"))quit();else showSetup()}
+function syncHome(){$("homeBtn").classList.toggle("hidden",!user||$("quiz").classList.contains("hidden")&&$("results").classList.contains("hidden"))}
+function showSetup(){if(!user){showGate();return}$("quiz").classList.add("hidden");$("results").classList.add("hidden");$("setup").classList.remove("hidden");syncHome();refresh();scrollTo(0,0)}
 document.addEventListener("keydown",e=>{if(!S||$("quiz").classList.contains("hidden"))return;const k=e.key.toUpperCase();
   if("ABCD".includes(k)&&k.length===1)choose(k);else if(e.key==="ArrowRight")go(1);else if(e.key==="ArrowLeft"&&S.i>0)go(-1)});
 
