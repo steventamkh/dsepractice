@@ -402,7 +402,7 @@ function finish(){
   const yrs=[...new Set(S.qs.map(q=>q.y))].sort();
   sync({part:(S.src==="redo"?"Wrong-question redo – ":S.src==="flag"?"Flagged review – ":"")+(S.qs[0]&&S.qs[0].P===2?"Paper 2":"Paper 1A")+` (${yrs.length>3?yrs[0]+"–"+yrs[yrs.length-1]:yrs.join(", ")})`,
     topics:TOPICS.filter(k=>S.qs.some(q=>q.t===k)).map(k=>T.E.topicsN[k]),mode:S.mode,total:S.qs.length,
-    correct:S.qs.filter((q,k)=>S.ans[k]===q.a).length,seconds:S.used,wrongIds:S.qs.filter((q,k)=>S.ans[k]!==q.a).map(qid)});
+    correct:S.qs.filter((q,k)=>S.ans[k]===q.a).length,seconds:S.used,wrongIds:S.qs.filter((q,k)=>S.ans[k]!==q.a).map(qid),qIds:S.qs.map(qid)});
   $("quiz").classList.add("hidden");$("results").classList.remove("hidden");syncHome();renderResults();scrollTo(0,0);
 }
 function renderResults(){
